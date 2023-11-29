@@ -69,7 +69,7 @@ public class DietListDAOImpl implements DietListDAO {
 
 	@Override
 	public List<DietListVO> selectAll(DietListVO dlVO) {
-			if(Integer.parseInt(dlVO.getListCount())==1) {
+			if(dlVO.getListCount()==1) {
 				Object[] args= {dlVO.getMealTime(), dlVO.getSearchStartDate(), dlVO.getSearchLastDate(), dlVO.getRestaurantName()};
 				return jdbcTemplate.query(SQL_SELECTALL_ALLDIETLIST,args, new DietListMapper());
 			}

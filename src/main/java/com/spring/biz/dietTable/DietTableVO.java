@@ -1,5 +1,7 @@
 package com.spring.biz.dietTable;
 
+import java.util.List;
+
 public class DietTableVO {
 
 	private String ymd;
@@ -7,7 +9,8 @@ public class DietTableVO {
 	private String restaurantName;
 	private String mealTime;
 	private String mealName;
-	private String ingredimentName;
+	private String ingredimentNames;
+	private List<String> ingredimentName;
 	
 	//서치컨디션
 	private String searchStartDate;
@@ -44,11 +47,11 @@ public class DietTableVO {
 	public void setMealName(String mealName) {
 		this.mealName = mealName;
 	}
-	public String getIngredimentName() {
-		return ingredimentName;
+	public String getIngredimentNames() {
+		return ingredimentNames;
 	}
-	public void setIngredimentName(String ingredimentName) {
-		this.ingredimentName = ingredimentName;
+	public void setIngredimentNames(String ingredimentNames) {
+		this.ingredimentNames = ingredimentNames;
 	}
 	public String getSearchStartDate() {
 		return searchStartDate;
@@ -62,4 +65,11 @@ public class DietTableVO {
 	public void setSearchLastDate(String searchLastDate) {
 		this.searchLastDate = searchLastDate;
 	}
+	public List<String> getIngredimentName() {
+		return ingredimentName;
+	}
+	public void setIngredimentName(List<String> ingredimentName) {
+		this.ingredimentName = ingredimentName;
+	}
+	
 }

@@ -80,7 +80,7 @@ class DietListMapper implements RowMapper<DietTableVO>{
 		dtdata.setRestaurantName(rs.getString("식당"));
 		dtdata.setMealTime(rs.getString("식사구분"));
 		dtdata.setMealName(rs.getString("요리명"));
-		dtdata.setIngredimentName(rs.getString("재료명들"));
+		dtdata.setIngredimentNames(rs.getString("재료명들"));
 		
 		return dtdata;
 	}

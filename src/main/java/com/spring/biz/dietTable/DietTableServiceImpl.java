@@ -1,9 +1,12 @@
 package com.spring.biz.dietTable;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DietTableServiceImpl implements DietTableService {
 
 	@Autowired
@@ -21,7 +24,16 @@ public class DietTableServiceImpl implements DietTableService {
 
 	@Override
 	public List<DietTableVO> selectAll(DietTableVO dtVO) {
-		return dtDAO.selectAll(dtVO);
+		List<DietTableVO> dtdatas=dtDAO.selectAll(dtVO);
+		if(dtdatas.isEmpty()) {
+			return null;
+		}
+		for(DietTableVO dtdata: dtdatas) {
+			List<String> dataList=Arrays.asList(dtdata.getIngredimentNames().split(","));
+			dtdata.setIngredimentName(dataList);
+		}
+		
+		return dtdatas;
 	}
 
 	@Override

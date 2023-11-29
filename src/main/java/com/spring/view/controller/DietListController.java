@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.spring.biz.cmsCommonCode.CmsCommonCodeService;
+import com.spring.biz.cmsCommonCode.CmsCommonCodeVO;
 import com.spring.biz.dietList.DietListService;
 import com.spring.biz.dietList.DietListVO;
 import com.spring.biz.page.PageService;
@@ -24,27 +26,38 @@ public class DietListController {
 	@Autowired
 	private PageService pageService;
 	
+	@Autowired
+	private CmsCommonCodeService cmsCommonCodeService;
+	
 	@ModelAttribute("dietListRestaurantNameSearch")
-	public Map<String,String> restaurantNameSearch(){
+	public Map<String,String> restaurantNameSearch(CmsCommonCodeVO cVO){
 		Map<String,String> restaurantNameMap = new LinkedHashMap<String, String>();
 		
+		cVO.setTypeId("R");
+		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
+		
 		restaurantNameMap.put("전체", "");
-		restaurantNameMap.put("여민관", "여민관");
-		restaurantNameMap.put("춘추관", "춘추관");
+		for (CmsCommonCodeVO cdata : cdatas) {
+			restaurantNameMap.put(cdata.getDataName(), cdata.getDataName());
+		}
 		
 		return restaurantNameMap;
 	}
 	
 	@ModelAttribute("dietListMealTimeSearch")
-	public Map<String,String> mealTimeSearch(){
+	public Map<String,String> mealTimeSearch(CmsCommonCodeVO cVO){
 		Map<String,String> mealTimeMap = new LinkedHashMap<String, String>();
 		
-		mealTimeMap.put("전체", "");
-		mealTimeMap.put("조식", "조식");
-		mealTimeMap.put("중식", "중식");
-		mealTimeMap.put("석식", "석식");
-		mealTimeMap.put("간식", "간식");
+		cVO.setTypeId("M");
+		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
 		
+		for (CmsCommonCodeVO cdata: cdatas) {
+			if(cdata.getDataName().equals("전체")) {
+				mealTimeMap.put(cdata.getDataName(),"");
+			}else {
+				mealTimeMap.put(cdata.getDataName(),cdata.getDataName());
+			}
+		}
 		return mealTimeMap;
 	}
 	
@@ -68,18 +81,17 @@ public class DietListController {
 		System.out.println("dVO="+dlVO);
 		System.out.println("pVO="+pVO);
 		
-		if(pVO.getCurrentPage()==0) {
+		if(pVO.getCurrentPage()==0 && dlVO.getCurrentPage()==0) {
 			pVO.setCurrentPage(1);
+			dlVO.setCurrentPage(1);
 		}
-		if(pVO.getListCount()== null && dlVO.getListCount()== null) {
-			pVO.setListCount("1");
-			dlVO.setListCount("1");
+		
+		if(pVO.getListCount()== 0 && dlVO.getListCount()== 0) {
+			pVO.setListCount(1);
+			dlVO.setListCount(1);
 		}
 		
 		pVO=pageService.selectOne(pVO);
-		if(pVO!=null) {
-			dlVO.setCurrentPage(pVO.getCurrentPage());
-		}
 		List<DietListVO> dietListdatas=dietListService.selectAll(dlVO);
 		
 		model.addAttribute("searchdata",dlVO);

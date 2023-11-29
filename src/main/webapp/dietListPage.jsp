@@ -45,7 +45,7 @@ select {
 	padding-top: 20px;
 	margin-top: 30px;
 	margin-left: 30px;
-	width: 15%;
+	width: 130px;
 	box-sizing: border-box;
 	height: 65vh;
 }
@@ -116,24 +116,26 @@ select {
 	text-align: center;
 	width: -webkit-fill-available;
 }
-.page{
+
+.page {
 	margin-left: 120px;
 }
 
-.page table{
+.page table {
 	margin: auto;
 }
 
-.page a{
-	color:#000000;
-}
-.currentPage{
-	font-weight:bolder;
-}
-.notCurrentPage{
-	font-weight:lighter;
+.page a {
+	color: #000000;
 }
 
+.currentPage {
+	font-weight: bolder;
+}
+
+.notCurrentPage {
+	font-weight: lighter;
+}
 </style>
 </head>
 <body>
@@ -161,24 +163,23 @@ select {
 								onchange="updateEndDateMinMax()"></li>
 							<li>~ <input type="date" id="endDate" min="${dateType1}"
 								max="${dateType1}"></li>
-								
+
 							<li>식당명 <select id="restaurantName" name="restaurantName">
-								<c:forEach var="rName" items="${dietListRestaurantNameSearch}">
-									<option value="${rName.value}">${rName.key}</option>
-								</c:forEach>
+									<c:forEach var="rName" items="${dietListRestaurantNameSearch}">
+										<option value="${rName.value}">${rName.key}</option>
+									</c:forEach>
 							</select>
 							</li>
-							<li>식사 구분
-								<select id="mealType" name="mealType">
+							<li>식사 구분 <select id="mealType" name="mealType">
 									<c:forEach var="mealTime" items="${dietListMealTimeSearch}">
 										<option value="${mealTime.value}">${mealTime.key}</option>
 									</c:forEach>
-								</select>
+							</select>
 							</li>
 							<li>목록 갯수 <select id="listCnt" name="listCnt">
-								<c:forEach var="listCount" items="${dietListListCountSearch}">
-									<option value="${listCount.value}">${listCount.key}</option>
-								</c:forEach>
+									<c:forEach var="listCount" items="${dietListListCountSearch}">
+										<option value="${listCount.value}">${listCount.key}</option>
+									</c:forEach>
 							</select></li>
 						</ul>
 						<button style="margin-right: 30px; width: 100px; height: 60px;"
@@ -199,24 +200,23 @@ select {
 							</tr>
 						</thead>
 						<tbody>
-						<c:if test="${empty dietdatas}">
-							<tr>
-								<td colspan="6">식단 데이터가 없습니다.
-								</td>							
-							</tr>
-						</c:if>
-						<c:if test="${dietdatas ne null }">
-							<c:forEach var="dietdata" items="${dietdatas}">
-								<tr> 
-									<td>${dietdata.ymd}</td>
-									<td>${dietdata.weekday}</td>
-									<td>${dietdata.restaurantName}</td>
-									<td>${dietdata.mealTime}</td>
-									<td>${dietdata.mealName}</td>
-									<td>${dietdata.ingredimentName}</td>
+							<c:if test="${empty dietdatas}">
+								<tr>
+									<td colspan="6">식단 데이터가 없습니다.</td>
 								</tr>
-							</c:forEach>
-						</c:if>
+							</c:if>
+							<c:if test="${dietdatas ne null }">
+								<c:forEach var="dietdata" items="${dietdatas}">
+									<tr>
+										<td>${dietdata.ymd}</td>
+										<td>${dietdata.weekday}</td>
+										<td>${dietdata.restaurantName}</td>
+										<td>${dietdata.mealTime}</td>
+										<td>${dietdata.mealName}</td>
+										<td>${dietdata.ingredimentName}</td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -228,28 +228,31 @@ select {
 				<thead>
 					<tr>
 						<c:if test="${pagedata.beforePageList }">
-						<th><a href="dietListPage.do?currentPage=${pagedata.listFirstPage - 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">&lt;&lt;</a></th>
+							<th><a
+								href="dietListPage.do?currentPage=${pagedata.listFirstPage - 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">&lt;&lt;</a></th>
 						</c:if>
 						<c:if test="${pagedata.beforePage}">
-						<th><a href="dietListPage.do?currentPage=${pagedata.currentPage - 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">&lt;</a></th>
+							<th><a
+								href="dietListPage.do?currentPage=${pagedata.currentPage - 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">&lt;</a></th>
 						</c:if>
-						<c:forEach var="pageCount" begin="${pagedata.listFirstPage }" end="${pagedata.listLastPage }">
-						<th>
-						<c:if test="${pagedata.currentPage eq pageCount}">
-						<a href="#" class="currentPage" style="color: blue">${pageCount}
-						</a>
-						</c:if>
-						<c:if test="${pagedata.currentPage ne pageCount}">
-						<a href="dietListPage.do?currentPage=${pageCount}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}" class="notCurrentPage">${pageCount}
-						</a>
-						</c:if>
-						</th>
+						<c:forEach var="pageCount" begin="${pagedata.listFirstPage }"
+							end="${pagedata.listLastPage }">
+							<th><c:if test="${pagedata.currentPage eq pageCount}">
+									<a href="#" class="currentPage" style="color: blue">${pageCount}
+									</a>
+								</c:if> <c:if test="${pagedata.currentPage ne pageCount}">
+									<a
+										href="dietListPage.do?currentPage=${pageCount}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}"
+										class="notCurrentPage">${pageCount} </a>
+								</c:if></th>
 						</c:forEach>
 						<c:if test="${pagedata.nextPage}">
-						<th><a href="dietListPage.do?currentPage=${pagedata.currentPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">></a></th>
+							<th><a
+								href="dietListPage.do?currentPage=${pagedata.currentPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">></a></th>
 						</c:if>
 						<c:if test="${pagedata.nextPageList}">
-						<th><a href="dietListPage.do?currentPage=${pagedata.listLastPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">>></a></th>
+							<th><a
+								href="dietListPage.do?currentPage=${pagedata.listLastPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">>></a></th>
 						</c:if>
 					</tr>
 				</thead>
@@ -258,11 +261,10 @@ select {
 	</div>
 	<script>
 		function updateEndDateMinMax() {
-			// 선택한 시작 날짜 가져오기
+
 			var startDate = new Date(document.getElementById("startDate").value);
 			document.getElementById("endDate").value = "";
 
-			// 종료 날짜 입력의 min,max 속성 설정
 			document.getElementById("endDate").min = document.getElementById("startDate").value;
 		}
 
@@ -284,16 +286,19 @@ select {
 			}
 
 			// 페이지 이동
-		    window.location.href = 'dietListPage.do?searchStartDate=' + startDate + '&searchLastDate=' + endDate + '&restaurantName=' + restaurantName + '&mealTime=' + mealType + '&listCount=' + listCnt;
+			window.location.href = 'dietListPage.do?searchStartDate='
+					+ startDate + '&searchLastDate=' + endDate
+					+ '&restaurantName=' + restaurantName + '&mealTime='
+					+ mealType + '&listCount=' + listCnt;
 		}
-		window.onload = function(){
-			 document.getElementById("startDate").value = "${searchdata.searchStartDate}"
-			 document.getElementById("endDate").value = "${searchdata.searchLastDate}"
-			 document.getElementById("restaurantName").value = "${searchdata.restaurantName}"
-			 document.getElementById("mealType").value = "${searchdata.mealTime}"
-			 document.getElementById("listCnt").value = "${searchdata.listCount}"
+		window.onload = function() {
+			document.getElementById("startDate").value = "${searchdata.searchStartDate}"
+			document.getElementById("endDate").value = "${searchdata.searchLastDate}"
+			document.getElementById("restaurantName").value = "${searchdata.restaurantName}"
+			document.getElementById("mealType").value = "${searchdata.mealTime}"
+			document.getElementById("listCnt").value = "${searchdata.listCount}"
+			document.getElementById("endDate").min = document.getElementById("startDate").value;
 		}
-		
 	</script>
 
 </body>

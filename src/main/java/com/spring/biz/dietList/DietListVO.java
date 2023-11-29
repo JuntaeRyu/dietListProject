@@ -10,7 +10,7 @@ public class DietListVO {
 	private String ingredimentName;
 	
 	//서치컨디션
-	private String listCount;
+	private int listCount;
 	private int currentPage;
 	private String searchStartDate;
 	private String searchLastDate;
@@ -52,10 +52,10 @@ public class DietListVO {
 	public void setIngredimentName(String ingredimentName) {
 		this.ingredimentName = ingredimentName;
 	}
-	public String getListCount() {
+	public int getListCount() {
 		return listCount;
 	}
-	public void setListCount(String listCount) {
+	public void setListCount(int listCount) {
 		this.listCount = listCount;
 	}
 	public int getCurrentPage() {

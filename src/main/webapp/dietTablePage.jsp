@@ -28,6 +28,7 @@ th, td {
 	border: 1px solid #000000;
 	padding: 8px;
 	text-align: center;
+	white-space: nowrap;
 }
 
 select {
@@ -107,6 +108,14 @@ select {
     margin-top: 10px;
     border-radius: 8px;
 }
+#weeklyCalendar thead tr th{
+	width:10%;
+}
+#calendarBody tr td{
+	text-align:left;
+	vertical-align: top;
+}
+
 
 @media print {
 	button {
@@ -185,39 +194,43 @@ select {
 						<h5> 기간: ${searchdata.searchStartDate}  ~  ${searchdata.searchLastDate}</h5>
 					</span>
 					</c:if>
-					<c:if test="${searchdata.searchStartDate eq null}">
-						<h4 style="text-align: center;">검색을 먼저 해주세요.</h4>
+					<c:if test="${empty dietTableMap}">
+						<h4 style="text-align: center;">식단 데이터가 없습니다.</h4>
 					</c:if>
 				</div>
 
 				<div>
+					<c:if test="${not empty dietTableMap}">
 					<table id="weeklyCalendar">
 						<thead>
 							<tr>
-								<th id="categorization" style="width: 5%">구분</th>
-								<th>월</th>
-								<th>화</th>
-								<th>수</th>
-								<th>목</th>
-								<th>금</th>
-								<th>토</th>
-								<th>일</th>
+								<th id="categorization" style="width: 5%; text-align:center">구분</th>
+								<c:forEach var="date" items="${dates}">
+									<th>${date.ymd}<br>(${date.weekday})</th>
+								</c:forEach>
 							</tr>
 						</thead>
 						<tbody id="calendarBody">
-							<c:forEach var="category" begin="1" end="4">
+							<c:forEach var="mealTypedata" items="${mealTypedatas}">
 								<tr>
-									<td>category</td>
-									<c:forEach var="diet" begin="10" end="16">
-										<td><c:forEach begin="1" end="2">diet<br>
-												<c:forEach var="ingtediment" begin="1" end="3">ingrediment<br>
+									<td style="vertical-align: middle;">${mealTypedata.dataName}</td>
+									<c:forEach var="date" items="${dates }">
+										<td><c:forEach var="dietMap" items="${dietTableMap }">
+										<c:set var="dietMapKey" value="${date.ymd}${mealTypedata.dataName }"/>
+										 <c:if test="${dietMap.key eq dietMapKey}">
+										 	<c:forEach var="dietTableValue" items="${dietMap.value}">
+												●${dietTableValue.mealName}<br>										 		
+												<c:forEach var="ingrediment" items="${dietTableValue.ingredimentName }">-${ingrediment }<br>
 												</c:forEach>
+										 	</c:forEach>
+												 </c:if>
 											</c:forEach></td>
 									</c:forEach>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					</c:if>
 				</div>
 			</div>
 			<br>
@@ -260,6 +273,7 @@ select {
 				alert("식당을 선택하세요.");
 				return;
 			}
+			
 			window.location.href = 'dietTablePage.do?searchStartDate='
 					+ startDate + '&searchLastDate=' + endDate
 					+ '&restaurantName=' + restaurantName + '&mealTime='
@@ -268,9 +282,21 @@ select {
 		window.onload = function() {
 			document.getElementById("startDate").value = "${searchdata.searchStartDate}"
 			document.getElementById("endDate").value = "${searchdata.searchLastDate}"
+			var startDateInput = document.getElementById("startDate");
+			var endDateInput = document.getElementById("endDate");
+
+		    startDateInput.value = "${searchdata.searchStartDate}";
+		    endDateInput.value = "${searchdata.searchLastDate}";
+
+		    // 마지막 날짜가 시작 날짜보다 작으면 시작 날짜로 설정
+		    if (endDateInput.value < startDateInput.value) {
+		        endDateInput.value = startDateInput.value;
+		    }
+			
 			document.getElementById("restaurantName").value = "${searchdata.restaurantName}"
 					|| ""
 			document.getElementById("mealType").value = "${searchdata.mealTime}"
+			document.getElementById("endDate").min = document.getElementById("startDate").value;
 		}
 		
 		function printPage() {

@@ -4,7 +4,7 @@ package com.spring.biz.page;
 public class PageVO {
 	private int totalPage;
 	private int currentPage;
-	private String listCount;
+	private int listCount;
 	private int listFirstPage;
 	private int listLastPage;
 	private boolean beforePage;
@@ -32,10 +32,10 @@ public class PageVO {
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
-	public String getListCount() {
+	public int getListCount() {
 		return listCount;
 	}
-	public void setListCount(String listCount) {
+	public void setListCount(int listCount) {
 		this.listCount = listCount;
 	}
 	public int getListFirstPage() {
