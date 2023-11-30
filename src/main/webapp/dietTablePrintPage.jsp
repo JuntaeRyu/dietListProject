@@ -141,55 +141,11 @@ select {
 </style>
 </head>
 <body>
-
+<c:forEach var="currentPage" begin="1" end="${totalPage }">
 	<div style="display: inline-block;">
 		<h1 class="title">식단표 조회</h1>
 		<div class="container">
-			<div class="sidebar">
-				<section style="margin-bottom: 2em;">
-					<h2 class="major">
-						<span>메뉴 목록</span>
-					</h2>
-					<ul class="sidebarList">
-						<li><a href="dietListPage.do">식단목록 조회</a></li>
-						<li><a href="dietTablePage.do">식단표 조회</a></li>
-					</ul>
-
-				</section>
-			</div>
 			<div class="content">
-				<div class="conditionCheck">
-					<div style="display: flex; align-items: center;">
-						<ul>
-							<li style="width: 200px">검색 기간 <input type="date"
-								id="startDate" value="${dateType1}"
-								onchange="updateEndDateMinMax()"></li>
-							<li>~ <input type="date" id="endDate" min="${dateType1}"
-								max="${dateType1}"></li>
-
-							<li>식당명 <select id="restaurantName" name="restaurantName">
-									<c:forEach var="rName" items="${dietTableRestaurantNameSearch}">
-										<option value="${rName.value}">${rName.key}</option>
-									</c:forEach>
-							</select>
-							</li>
-							<li>식사 구분 <select id="mealType" name="mealType">
-									<c:forEach var="mealTime" items="${dietTableMealTimeSearch}">
-										<option value="${mealTime.value}">${mealTime.key}</option>
-									</c:forEach>
-							</select>
-							</li>
-						</ul>
-						
-						<div>
-						<button style="margin-right: 30px; width: 100px; height: 60px;"
-							onclick="search()">검색</button>
-						</div>
-					</div>
-				</div>
-				<c:if test="${searchdata.searchStartDate ne null}">
-				<button style="margin-left: 90%; margin-top: 10px; width: 60px; height: 40px;" onclick="printPage()">인쇄</button>
-				</c:if>
 				<div id='header' style="border: 1px solid">
 					<h2 style="text-align: center">주간 식단표</h2>
 					<c:if test="${searchdata.searchStartDate ne null}">
@@ -197,9 +153,6 @@ select {
 						<h5> 식당명: ${searchdata.restaurantName}</h5>
 						<h5> 기간: ${searchdata.searchStartDate}  ~  ${searchdata.searchLastDate}</h5>
 					</span>
-					</c:if>
-					<c:if test="${empty dietTableMap}">
-						<h4 style="text-align: center;">식단 데이터가 없습니다.</h4>
 					</c:if>
 				</div>
 
@@ -215,14 +168,16 @@ select {
 							</tr>
 						</thead>
 						<tbody id="calendarBody">
-							<c:forEach var="mealTypedata" items="${mealTypedatas}">
+							<c:forEach var="mealTypedata" items="${mealTypes}">
 								<tr>
 									<td style="vertical-align: middle;">${mealTypedata.dataName}</td>
 									<c:forEach var="date" items="${dates }">
-										<td><c:forEach var="dietMap" items="${dietTableMap }">
-										<c:set var="dietMapKey" value="${date.ymd}${mealTypedata.dataName }"/>
+										<td><c:forEach var="dietMap" items="${dietPrintMap }">
+										<c:set var="dietMapKey" value="${date.ymd}${mealTypedata.dataName }${currentPage }"/>
 										 <c:if test="${dietMap.key eq dietMapKey}">
 										 	<c:forEach var="dietTableValue" items="${dietMap.value}">
+										 		<c:if test="${dietTableValue.meal}">●${dietTableValue.ingredimentName }</c:if>
+										 		<c:if test="${not dietTableValue.meal}">-${dietTableValue.ingredimentName }</c:if>
 										 	</c:forEach>
 												 </c:if>
 											</c:forEach></td>
@@ -237,6 +192,7 @@ select {
 			<br>
 		</div>
 	</div>
+	</c:forEach>
 	<script>
 		function updateEndDateMinMax() {
 			// 선택한 시작 날짜 가져오기
@@ -304,6 +260,7 @@ select {
             window.print();
         }
 	</script>
+
 
 </body>
 </html>

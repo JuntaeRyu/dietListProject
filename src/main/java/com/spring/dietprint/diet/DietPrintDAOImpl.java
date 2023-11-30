@@ -62,6 +62,4 @@ class DietListMapper implements RowMapper<DietPrintVO>{
 		
 		return dpdata;
 	}
-	
-	
 }

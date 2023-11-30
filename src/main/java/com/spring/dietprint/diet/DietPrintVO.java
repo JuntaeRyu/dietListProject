@@ -8,6 +8,7 @@ public class DietPrintVO {
 	private String mealTime;
 	private String mealName;
 	private String ingredimentName;
+	private int page;
 	private boolean meal;
 	
 	//서치컨디션
@@ -68,6 +69,13 @@ public class DietPrintVO {
 	}
 	public void setMeal(boolean meal) {
 		this.meal = meal;
+	}
+	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
 	}
 	@Override
 	public String toString() {
