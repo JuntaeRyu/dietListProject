@@ -223,9 +223,6 @@ select {
 										<c:set var="dietMapKey" value="${date.ymd}${mealTypedata.dataName }"/>
 										 <c:if test="${dietMap.key eq dietMapKey}">
 										 	<c:forEach var="dietTableValue" items="${dietMap.value}">
-												●${dietTableValue.mealName}<br>										 		
-												<c:forEach var="ingrediment" items="${dietTableValue.ingredimentName }">-${ingrediment }<br>
-												</c:forEach>
 										 	</c:forEach>
 												 </c:if>
 											</c:forEach></td>
@@ -278,7 +275,7 @@ select {
 				return;
 			}
 			
-			window.location.href = 'dietTablePage.do?searchStartDate='
+			window.location.href = 'dietPrintPage.do?searchStartDate='
 					+ startDate + '&searchLastDate=' + endDate
 					+ '&restaurantName=' + restaurantName + '&mealTime='
 					+ mealType;
@@ -304,16 +301,7 @@ select {
 		}
 		
 		function printPage() {
-			var startDate = document.getElementById("startDate").value;
-			var endDate = document.getElementById("endDate").value;
-			var restaurantName = document.getElementById("restaurantName").value;
-			var mealType = document.getElementById("mealType").value;
-
-			
-			window.location.href = 'dietPrintPage.do?searchStartDate='
-				+ startDate + '&searchLastDate=' + endDate
-				+ '&restaurantName=' + restaurantName + '&mealTime='
-				+ mealType;
+            window.print();
         }
 	</script>
 

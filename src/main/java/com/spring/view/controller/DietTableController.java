@@ -12,12 +12,14 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spring.biz.cmsCommonCode.CmsCommonCodeService;
-import com.spring.biz.cmsCommonCode.CmsCommonCodeVO;
-import com.spring.biz.date.DateService;
-import com.spring.biz.date.DateVO;
-import com.spring.biz.dietTable.DietTableService;
-import com.spring.biz.dietTable.DietTableVO;
+import com.spring.common.date.DateService;
+import com.spring.common.date.DateVO;
+import com.spring.common.mealtype.MealTypeService;
+import com.spring.common.mealtype.MealTypeVO;
+import com.spring.common.restaurant.RestaurantService;
+import com.spring.common.restaurant.RestaurantVO;
+import com.spring.diettable.diet.DietTableService;
+import com.spring.diettable.diet.DietTableVO;
 
 @Controller
 public class DietTableController {
@@ -26,49 +28,49 @@ public class DietTableController {
 	private DietTableService dietTableService;
 
 	@Autowired
-	private CmsCommonCodeService cmsCommonCodeService;
+	private MealTypeService mealTypeService;
+	
+	@Autowired
+	private RestaurantService restaurantService;
 
 	@Autowired
 	private DateService dateService;
 
 	@ModelAttribute("dietTableRestaurantNameSearch")
-	public Map<String,String> restaurantNameSearch(CmsCommonCodeVO cVO){
+	public Map<String,String> restaurantNameSearch(RestaurantVO rVO){
 		Map<String,String> restaurantNameMap = new LinkedHashMap<String, String>();
 
-		cVO.setTypeId("R");
-		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
+		List<RestaurantVO> rdatas=restaurantService.selectAll(rVO);
 
 		restaurantNameMap.put("-선택-", "");
-		for (CmsCommonCodeVO cdata : cdatas) {
-			restaurantNameMap.put(cdata.getDataName(), cdata.getDataName());
+		for (RestaurantVO rdata : rdatas) {
+			restaurantNameMap.put(rdata.getDataName(), rdata.getDataName());
 		}
 
 		return restaurantNameMap;
 	}
 
 	@ModelAttribute("dietTableMealTimeSearch")
-	public Map<String,String> mealTimeSearch(CmsCommonCodeVO cVO){
+	public Map<String,String> mealTimeSearch(MealTypeVO mtVO){
 		Map<String,String> mealTimeMap = new LinkedHashMap<String, String>();
 
-		cVO.setTypeId("M");
-		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
+		List<MealTypeVO> mtdatas=mealTypeService.selectAll(mtVO);
 
-		for (CmsCommonCodeVO cdata: cdatas) {
-			if(cdata.getDataName().equals("전체")) {
-				mealTimeMap.put(cdata.getDataName(),"");
+		for (MealTypeVO mtdata: mtdatas) {
+			if(mtdata.getDataName().equals("전체")) {
+				mealTimeMap.put(mtdata.getDataName(),"");
 			}else {
-				mealTimeMap.put(cdata.getDataName(),cdata.getDataName());
+				mealTimeMap.put(mtdata.getDataName(),mtdata.getDataName());
 			}
 		}
 		return mealTimeMap;
 	}
 
 	@RequestMapping(value="/dietTablePage.do")
-	public String dietTablePage(DietTableVO dtVO,DateVO dVO,CmsCommonCodeVO cVO, Model model) {
+	public String dietTablePage(DietTableVO dtVO,DateVO dVO,MealTypeVO mtVO, Model model) {
 
-		cVO.setTypeId("M");
-		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
-		cdatas.remove(0);
+		List<MealTypeVO> mtdatas=mealTypeService.selectAll(mtVO);
+		mtdatas.remove(0);
 
 
 		List<DateVO> ddatas=dateService.selectAll(dVO);
@@ -82,7 +84,7 @@ public class DietTableController {
 
 			model.addAttribute("dietTableMap",dietTableMap);
 			model.addAttribute("dates",ddatas);
-			model.addAttribute("mealTypedatas",cdatas);
+			model.addAttribute("mealTypedatas",mtdatas);
 		}
 		model.addAttribute("searchdata",dtVO);
 

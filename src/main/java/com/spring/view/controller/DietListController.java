@@ -10,12 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.spring.biz.cmsCommonCode.CmsCommonCodeService;
-import com.spring.biz.cmsCommonCode.CmsCommonCodeVO;
-import com.spring.biz.dietList.DietListService;
-import com.spring.biz.dietList.DietListVO;
-import com.spring.biz.page.PageService;
-import com.spring.biz.page.PageVO;
+import com.spring.common.mealtype.MealTypeService;
+import com.spring.common.mealtype.MealTypeVO;
+import com.spring.common.page.PageService;
+import com.spring.common.page.PageVO;
+import com.spring.common.restaurant.RestaurantService;
+import com.spring.common.restaurant.RestaurantVO;
+import com.spring.dietlist.diet.DietListService;
+import com.spring.dietlist.diet.DietListVO;
 
 @Controller
 public class DietListController {
@@ -27,35 +29,36 @@ public class DietListController {
 	private PageService pageService;
 	
 	@Autowired
-	private CmsCommonCodeService cmsCommonCodeService;
+	private MealTypeService mealTypeService;
+	
+	@Autowired
+	private RestaurantService restaurantService;
 	
 	@ModelAttribute("dietListRestaurantNameSearch")
-	public Map<String,String> restaurantNameSearch(CmsCommonCodeVO cVO){
+	public Map<String,String> restaurantNameSearch(RestaurantVO rVO){
 		Map<String,String> restaurantNameMap = new LinkedHashMap<String, String>();
 		
-		cVO.setTypeId("R");
-		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
+		List<RestaurantVO> rdatas=restaurantService.selectAll(rVO);
 		
 		restaurantNameMap.put("전체", "");
-		for (CmsCommonCodeVO cdata : cdatas) {
-			restaurantNameMap.put(cdata.getDataName(), cdata.getDataName());
+		for (RestaurantVO rdata : rdatas) {
+			restaurantNameMap.put(rdata.getDataName(), rdata.getDataName());
 		}
 		
 		return restaurantNameMap;
 	}
 	
 	@ModelAttribute("dietListMealTimeSearch")
-	public Map<String,String> mealTimeSearch(CmsCommonCodeVO cVO){
+	public Map<String,String> mealTimeSearch(MealTypeVO mtVO){
 		Map<String,String> mealTimeMap = new LinkedHashMap<String, String>();
-		
-		cVO.setTypeId("M");
-		List<CmsCommonCodeVO> cdatas=cmsCommonCodeService.selectAll(cVO);
-		
-		for (CmsCommonCodeVO cdata: cdatas) {
-			if(cdata.getDataName().equals("전체")) {
-				mealTimeMap.put(cdata.getDataName(),"");
+
+		List<MealTypeVO> mtdatas=mealTypeService.selectAll(mtVO);
+
+		for (MealTypeVO mtdata: mtdatas) {
+			if(mtdata.getDataName().equals("전체")) {
+				mealTimeMap.put(mtdata.getDataName(),"");
 			}else {
-				mealTimeMap.put(cdata.getDataName(),cdata.getDataName());
+				mealTimeMap.put(mtdata.getDataName(),mtdata.getDataName());
 			}
 		}
 		return mealTimeMap;
@@ -78,19 +81,6 @@ public class DietListController {
 	@RequestMapping(value="/dietListPage.do")
 	public String dietListPage(PageVO pVO, DietListVO dlVO, Model model) {
 		
-		System.out.println("dVO="+dlVO);
-		System.out.println("pVO="+pVO);
-		
-		if(pVO.getCurrentPage()==0 && dlVO.getCurrentPage()==0) {
-			pVO.setCurrentPage(1);
-			dlVO.setCurrentPage(1);
-		}
-		
-		if(pVO.getListCount()== 0 && dlVO.getListCount()== 0) {
-			pVO.setListCount(1);
-			dlVO.setListCount(1);
-		}
-		
 		pVO=pageService.selectOne(pVO);
 		List<DietListVO> dietListdatas=dietListService.selectAll(dlVO);
 		
@@ -98,8 +88,6 @@ public class DietListController {
 		model.addAttribute("pagedata", pVO);
 		model.addAttribute("dietdatas",dietListdatas);
 		
-		
-		System.out.println("컨트롤러 통과");
 		return "dietListPage.jsp";
 	}
 	
