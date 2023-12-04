@@ -7,6 +7,7 @@
 <title>에러 404페이지</title>
 </head>
 <body>
+<h2>url을 확인해주세요</h2>
  <button onclick="goBack()">뒤로가기</button>
 
 <script>

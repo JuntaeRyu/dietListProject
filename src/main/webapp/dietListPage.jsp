@@ -242,17 +242,17 @@ select {
 									</a>
 								</c:if> <c:if test="${pagedata.currentPage ne pageCount}">
 									<a
-										href="dietListPage.do?currentPage=${pageCount}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}"
+										href="dietListPage.do?currentPage=${pageCount}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdata.restaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}"
 										class="notCurrentPage">${pageCount} </a>
 								</c:if></th>
 						</c:forEach>
 						<c:if test="${pagedata.nextPage}">
 							<th><a
-								href="dietListPage.do?currentPage=${pagedata.currentPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">></a></th>
+								href="dietListPage.do?currentPage=${pagedata.currentPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdata.restaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">></a></th>
 						</c:if>
 						<c:if test="${pagedata.nextPageList}">
 							<th><a
-								href="dietListPage.do?currentPage=${pagedata.listLastPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdatarestaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">>></a></th>
+								href="dietListPage.do?currentPage=${pagedata.listLastPage + 1}&searchStartDate=${searchdata.searchStartDate}&searchLastDate=${searchdata.searchLastDate}&restaurantName=${searchdata.restaurantName}&mealTime=${searchdata.mealTime}&listCount=${searchdata.listCount}">>></a></th>
 						</c:if>
 					</tr>
 				</thead>
@@ -297,6 +297,8 @@ select {
 			document.getElementById("restaurantName").value = "${searchdata.restaurantName}"
 			document.getElementById("mealType").value = "${searchdata.mealTime}"
 			document.getElementById("listCnt").value = "${searchdata.listCount}"
+			document.getElementById("endDate").min = document.getElementById("startDate").value;
+			
 			document.getElementById("endDate").min = document.getElementById("startDate").value;
 		}
 	</script>

@@ -12,14 +12,17 @@ public class DietPrintServiceImpl implements DietPrintService {
 	@Autowired
 	private DietPrintDAO dpDAO;
 
+	// 주간 식단 데이터 가져오기
 	@Override
 	public List<List<List<DietPrintVO>>> selectAll(DietPrintVO dpVO) {
 		List<DietPrintVO> dpdatas= dpDAO.selectAll(dpVO);
 
 		List<List<List<DietPrintVO>>> weeklyDpdatas = new ArrayList<>();
 
+		// 식사구분별 리스트 생성
 		for(int i=0; i<4; i++) {
 			weeklyDpdatas.add(new ArrayList<>());
+			// 날짜별 리스트 생성
 			for(int j=0; j<7; j++) {
 				weeklyDpdatas.get(i).add(new ArrayList<>());
 			}
@@ -37,7 +40,9 @@ public class DietPrintServiceImpl implements DietPrintService {
 
 			mealType=getMealTimeInteger(dpdata);
 
+			// 재료명에 요리명을 가지는 데이터를 생성해서 추가
 			if(!(mealName.equals(dpdata.getMealName())&& beforeWeekday.equals(dpdata.getWeekday()))) {
+				// 재료명에 요리명을 가지고 있는 데이터 생성
 				dpVO=new DietPrintVO();
 				dpVO.setYmd(dpdata.getYmd());
 				dpVO.setWeekday(dpdata.getWeekday());
@@ -45,6 +50,7 @@ public class DietPrintServiceImpl implements DietPrintService {
 				dpVO.setMealTime(dpdata.getMealTime());
 				dpVO.setMealName(dpdata.getMealName());
 				dpVO.setIngredimentName(dpdata.getMealName());
+				// 요리데이터인지 재료데이터인지 구분하는 칼럼
 				dpVO.setMeal(true);
 				dpVO.setSearchStartDate(dpdata.getSearchStartDate());
 				dpVO.setSearchLastDate(dpdata.getSearchLastDate());
@@ -58,6 +64,7 @@ public class DietPrintServiceImpl implements DietPrintService {
 		return weeklyDpdatas;
 	}
 	
+	// 식사구분에 해당하는 인덱스 추출
 	public int getMealTimeInteger(DietPrintVO dpVO) {
 		
 		int mealType=0;
@@ -81,6 +88,7 @@ public class DietPrintServiceImpl implements DietPrintService {
 		return mealType;
 	}
 	
+	// 날짜가 해당하는 인덱스 추출
 	public int getWeekdayInteger(DietPrintVO dpVO) {
 		
 		int weekday=0;

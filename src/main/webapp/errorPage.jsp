@@ -7,6 +7,7 @@
 <title>에러페이지</title>
 </head>
 <body>
+
  <button onclick="goBack()">뒤로가기</button>
  <script>
         function goBack() {

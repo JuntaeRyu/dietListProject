@@ -30,15 +30,19 @@ public class DietPrintController {
 	@RequestMapping(value="/dietPrintPage.do")
 	public String dietTablePage(DietPrintVO dtVO,DateVO dVO, Model model) {
 
-		
+		// 선택한 날짜가 해당하는 주간 날짜 추출
 		List<DateVO> ddatas=dateService.selectAll(dVO);
 		
+		// 주간식단표에 들어갈 데이터 추출
 		List<List<List<DietPrintVO>>> weeklyDpdatas=dietPrintService.selectAll(dtVO);
 
+		// 주간식단표에 들어갈 데이터를 key:날짜+식사구분+페이지로 변경해서 Map으로 저장
 		Map<String,List<DietPrintVO>> dtdatasMap =convertService.convertPrintPage(weeklyDpdatas);
 		
+		// 총 페이지 추출
 		int totalPage=convertService.getPrintPageTotalNum(weeklyDpdatas);
 		
+		// 페이지당 식사구분 추출
 		LinkedMultiValueMap<Integer, List<String>> pagePerMealType=convertService.getPagePerMealType(weeklyDpdatas);
 		 
 		model.addAttribute("searchdata",dtVO);

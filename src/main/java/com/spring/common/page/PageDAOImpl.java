@@ -61,7 +61,6 @@ public class PageDAOImpl implements PageDAO{
 	// PageDAO CRUD
 	@Override
 	public PageVO selectOne(PageVO pVO) {
-		System.out.println("pVO="+pVO.getListCount());
 		if(pVO.getListCount()>1) {
 		Object[] args = {pVO.getListCount(), pVO.getListCount(), pVO.getMealTime(),pVO.getSearchStartDate(), pVO.getSearchLastDate(),pVO.getRestaurantName()};
 		return jdbcTemplate.queryForObject(SQL_SELECTONE, args, new PageRowMapper());

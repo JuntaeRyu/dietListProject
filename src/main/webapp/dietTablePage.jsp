@@ -187,7 +187,7 @@ select {
 						</div>
 					</div>
 				</div>
-				<c:if test="${searchdata.searchStartDate ne null}">
+				<c:if test="${not empty dietTableMap}">
 				<button style="margin-left: 90%; margin-top: 10px; width: 60px; height: 40px;" onclick="printPage()">인쇄</button>
 				</c:if>
 				<div id='header' style="border: 1px solid">
@@ -284,8 +284,6 @@ select {
 					+ mealType;
 		}
 		window.onload = function() {
-			document.getElementById("startDate").value = "${searchdata.searchStartDate}"
-			document.getElementById("endDate").value = "${searchdata.searchLastDate}"
 			var startDateInput = document.getElementById("startDate");
 			var endDateInput = document.getElementById("endDate");
 
@@ -297,10 +295,19 @@ select {
 		        endDateInput.value = startDateInput.value;
 		    }
 			
+			var startDate = new Date(document.getElementById("startDate").value);
+			
+			var endDate = new Date(startDate);
+			endDate.setDate(startDate.getDate() + (7 - startDate.getDay()));
+			
+			var formattedEndDate = endDate.toISOString().split('T')[0];
+			
+			
 			document.getElementById("restaurantName").value = "${searchdata.restaurantName}"
 					|| ""
 			document.getElementById("mealType").value = "${searchdata.mealTime}"
 			document.getElementById("endDate").min = document.getElementById("startDate").value;
+			document.getElementById("endDate").max = formattedEndDate;
 		}
 		
 		function printPage() {
