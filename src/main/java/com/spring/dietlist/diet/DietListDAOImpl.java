@@ -57,15 +57,7 @@ public class DietListDAOImpl implements DietListDAO {
 			+ 	" ORDER BY YMD,C.CODE_ID,d.FOOD_NM)";
 
 	// DietDAO의 CRUD
-	@Override
-	public boolean insert(DietListVO dlVO) {
-		return false;
-	}
 
-	@Override
-	public DietListVO selectOne(DietListVO dlVO) {
-		return null;
-	}
 
 	@Override
 	public List<DietListVO> selectAll(DietListVO dlVO) {
@@ -76,17 +68,6 @@ public class DietListDAOImpl implements DietListDAO {
 			Object[] args= {dlVO.getMealTime(), dlVO.getSearchStartDate(), dlVO.getSearchLastDate(), dlVO.getRestaurantName(), dlVO.getListCount(), dlVO.getCurrentPage(), dlVO.getListCount(), dlVO.getCurrentPage()};
 			return jdbcTemplate.query(SQL_SELECTALL_DIETLISTPERPAGE,args, new DietListMapper());
 	}
-
-	@Override
-	public boolean update(DietListVO dlVO) {
-		return false;
-	}
-
-	@Override
-	public boolean delete(DietListVO dlVO) {
-		return false;
-	}
-	
 }
 
 // rowMapper

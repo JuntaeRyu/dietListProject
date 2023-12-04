@@ -12,28 +12,8 @@ public class DateServiceImpl implements DateService {
 	private DateDAO dDAO;
 	
 	@Override
-	public boolean insert(DateVO dVO) {
-		return dDAO.insert(dVO);
-	}
-
-	@Override
-	public DateVO selectOne(DateVO dVO) {
-		return dDAO.selectOne(dVO);
-	}
-
-	@Override
 	public List<DateVO> selectAll(DateVO dVO) {
 		return dDAO.selectAll(dVO);
-	}
-
-	@Override
-	public boolean update(DateVO dVO) {
-		return dDAO.update(dVO);
-	}
-
-	@Override
-	public boolean delete(DateVO dVO) {
-		return dDAO.delete(dVO);
 	}
 
 }

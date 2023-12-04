@@ -6,12 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.common.date.DateService;
 import com.spring.common.date.DateVO;
-import com.spring.common.mealtype.MealTypeService;
-import com.spring.common.mealtype.MealTypeVO;
 import com.spring.dietprint.convert.ConvertService;
 import com.spring.dietprint.diet.DietPrintService;
 import com.spring.dietprint.diet.DietPrintVO;
@@ -40,14 +39,14 @@ public class DietPrintController {
 		
 		int totalPage=convertService.getPrintPageTotalNum(weeklyDpdatas);
 		
-		 Map<String,List<String>> mealType=convertService.getPagePerMealType(totalPage, weeklyDpdatas);
-
-		
+		LinkedMultiValueMap<Integer, List<String>> pagePerMealType=convertService.getPagePerMealType(weeklyDpdatas);
+		 
+		model.addAttribute("searchdata",dtVO);
 		model.addAttribute("dates",ddatas);
 		model.addAttribute("dietPrintMap",dtdatasMap);
 		model.addAttribute("totalPage",totalPage);
-		model.addAttribute("mealTypes",mealType);
+		model.addAttribute("mealTypes",pagePerMealType);
 		
-		return "dietTablePage.jsp";
+		return "dietTablePrintPage.jsp";
 	}
 }

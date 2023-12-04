@@ -20,30 +20,11 @@ public class MealTypeDAOImpl implements MealTypeDAO {
 			+ " WHERE CODE_TYPE_ID = 'M'"
 			+ " ORDER BY CODE_ID";
 	
-	@Override
-	public boolean insert(MealTypeVO mtVO) {
-		return false;
-	}
-
-	@Override
-	public MealTypeVO selectOne(MealTypeVO mtVO) {
-		return null;
-	}
 
 	@Override
 	public List<MealTypeVO> selectAll(MealTypeVO mtVO) {
 		
 		return jdbcTemplate.query(SQL_SELECTALL_MEALTYPE,new MealTypeMapper());
-	}
-
-	@Override
-	public boolean update(MealTypeVO mtVO) {
-		return false;
-	}
-
-	@Override
-	public boolean delete(MealTypeVO mtVO) {
-		return false;
 	}
 
 }

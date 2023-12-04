@@ -2,7 +2,6 @@ package com.spring.common.page;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -61,11 +60,6 @@ public class PageDAOImpl implements PageDAO{
 	
 	// PageDAO CRUD
 	@Override
-	public boolean insert(PageVO pVO) {
-		return false;
-	}
-
-	@Override
 	public PageVO selectOne(PageVO pVO) {
 		System.out.println("pVO="+pVO.getListCount());
 		if(pVO.getListCount()>1) {
@@ -74,21 +68,6 @@ public class PageDAOImpl implements PageDAO{
 		}
 		pVO.setTotalPage(1);
 		return pVO;
-	}
-
-	@Override
-	public List<PageVO> selectAll(PageVO pVO) {
-		return null;
-	}
-
-	@Override
-	public boolean update(PageVO pVO) {
-		return false;
-	}
-
-	@Override
-	public boolean delete(PageVO pVO) {
-		return false;
 	}
 
 }

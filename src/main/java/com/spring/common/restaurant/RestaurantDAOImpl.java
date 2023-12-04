@@ -21,29 +21,9 @@ public class RestaurantDAOImpl implements RestaurantDAO {
 			+ " ORDER BY CODE_ID";
 	
 	@Override
-	public boolean insert(RestaurantVO rVO) {
-		return false;
-	}
-
-	@Override
-	public RestaurantVO selectOne(RestaurantVO rVO) {
-		return null;
-	}
-
-	@Override
 	public List<RestaurantVO> selectAll(RestaurantVO rVO) {
 		
 		return jdbcTemplate.query(SQL_SELECTALL_RESTAURANT,new RestaurantMapper());
-	}
-
-	@Override
-	public boolean update(RestaurantVO rVO) {
-		return false;
-	}
-
-	@Override
-	public boolean delete(RestaurantVO rVO) {
-		return false;
 	}
 
 }

@@ -40,30 +40,11 @@ public class DietTableDAOImpl implements DietTableDAO{
 			+ "	,d.FOOD_NM"
 			+ " ORDER BY YMD,C.CODE_ID,FOOD_NM";
 	
-	@Override
-	public boolean insert(DietTableVO dtVO) {
-		return false;
-	}
-
-	@Override
-	public DietTableVO selectOne(DietTableVO dtVO) {
-		return null;
-	}
 
 	@Override
 	public List<DietTableVO> selectAll(DietTableVO dtVO) {
 		Object[] args= {dtVO.getMealTime(), dtVO.getSearchStartDate(), dtVO.getSearchLastDate(), dtVO.getRestaurantName()};
 		return jdbcTemplate.query(SQL_SELECTALL_DIETTABLE,args, new DietListMapper());
-	}
-
-	@Override
-	public boolean update(DietTableVO dtVO) {
-		return false;
-	}
-
-	@Override
-	public boolean delete(DietTableVO dtVO) {
-		return false;
 	}
 
 }

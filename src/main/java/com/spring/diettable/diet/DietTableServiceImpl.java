@@ -15,16 +15,6 @@ public class DietTableServiceImpl implements DietTableService {
 	private DietTableDAO dtDAO;
 	
 	@Override
-	public boolean insert(DietTableVO dtVO) {
-		return dtDAO.insert(dtVO);
-	}
-
-	@Override
-	public DietTableVO selectOne(DietTableVO dtVO) {
-		return dtDAO.selectOne(dtVO);
-	}
-
-	@Override
 	public List<DietTableVO> selectAll(DietTableVO dtVO) {
 		List<DietTableVO> dtdatas=dtDAO.selectAll(dtVO);
 		if(dtdatas.isEmpty()) {
@@ -42,16 +32,6 @@ public class DietTableServiceImpl implements DietTableService {
 		}
 		
 		return dtdatas;
-	}
-
-	@Override
-	public boolean update(DietTableVO dtVO) {
-		return dtDAO.update(dtVO);
-	}
-
-	@Override
-	public boolean delete(DietTableVO dtVO) {
-		return dtDAO.delete(dtVO);
 	}
 
 }

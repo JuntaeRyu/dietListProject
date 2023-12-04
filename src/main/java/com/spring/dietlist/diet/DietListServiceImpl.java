@@ -10,16 +10,6 @@ public class DietListServiceImpl implements DietListService {
 
 	@Autowired
 	private DietListDAO dlDAO;
-	
-	@Override
-	public boolean insert(DietListVO dlVO) {
-		return dlDAO.insert(dlVO);
-	}
-
-	@Override
-	public DietListVO selectOne(DietListVO dlVO) {
-		return dlDAO.selectOne(dlVO);
-	}
 
 	@Override
 	public List<DietListVO> selectAll(DietListVO dlVO) {
@@ -32,16 +22,6 @@ public class DietListServiceImpl implements DietListService {
 		}
 		
 		return dlDAO.selectAll(dlVO);
-	}
-
-	@Override
-	public boolean update(DietListVO dlVO) {
-		return dlDAO.update(dlVO);
-	}
-
-	@Override
-	public boolean delete(DietListVO dlVO) {
-		return dlDAO.delete(dlVO);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.spring.common.page;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +15,6 @@ public class PageServiceImpl implements PageService {
 	@Autowired
 	private PageDAO pDAO;
 	
-	@Override
-	public boolean insert(PageVO pVO) {
-		return pDAO.insert(pVO);
-	}
 
 	@Override
 	public PageVO selectOne(PageVO pVO) {
@@ -62,21 +57,6 @@ public class PageServiceImpl implements PageService {
 		pdata.setListCount(pVO.getListCount());
 
 		return pdata;
-	}
-
-	@Override
-	public List<PageVO> selectAll(PageVO pVO) {
-		return pDAO.selectAll(pVO);
-	}
-
-	@Override
-	public boolean update(PageVO pVO) {
-		return pDAO.update(pVO);
-	}
-
-	@Override
-	public boolean delete(PageVO pVO) {
-		return pDAO.delete(pVO);
 	}
 
 }
